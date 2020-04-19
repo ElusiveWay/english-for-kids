@@ -4,6 +4,7 @@ import './styles/togglersStyle.scss';
 import '../node_modules/@fortawesome/fontawesome-free/css/all.css';
 import '../node_modules/@fortawesome/fontawesome-free/js/all';
 
+// Preset
 const doc = global.document;
 const contentClass = 'content-wrapper';
 const switchMenu = () => {
@@ -21,6 +22,11 @@ doc.onclick = (e) => {
     hideMenu();
   }
 };
+
+// Create audio
+const audio = doc.createElement('audio');
+audio.id = 'notice';
+doc.body.appendChild(audio);
 
 // Create menu
 const menuButtons = doc.createElement('div');
@@ -58,12 +64,12 @@ togglerAndStat.style.alignItems = 'flex-end';
 togglerAndStat.style.justifyContent = 'end';
 togglerAndStat.innerHTML = `
 <div class="toggle toggle--knob">
-  <input onclick="document.body.classList.toggle('play')" type="checkbox" id="toggle--knob" class="toggle--checkbox">
+  <input onclick="document.querySelectorAll('.rate').forEach(v=>v.parentNode.removeChild(v));document.querySelectorAll('.success-mask').forEach(v=>v.parentNode.removeChild(v));document.body.classList.remove('playing');document.body.classList.toggle('play')" type="checkbox" id="toggle--knob" class="toggle--checkbox">
   <label class="toggle--btn" for="toggle--knob"><span class="toggle--feature" data-label-on="Train"  data-label-off="Play"></span></label>
 </div>
-<div style="padding:12.5px 10px;text-align:center;margin:15px 0;width:120px" class="go-stat btn btn-secondary">
-  <span>Statistic</span>
-</div>
+<span style="cursor:pointer;color:darkred;padding:12.5px 10px;text-align:right;margin:15px 0;width:120px" class="go-stat">
+  <span><i class="far fa-clipboard"></i> Statistic</span>
+</span>
 `;
 doc.body.appendChild(togglerAndStat);
 

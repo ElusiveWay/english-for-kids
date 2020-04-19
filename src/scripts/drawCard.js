@@ -15,6 +15,7 @@ const drawCard = (querySelector = 'body', options = {}) => {
   };
   card.onclick = action;
   card.classList.add('efk-card');
+  card.id = title;
   if (options.circle) card.classList.add('type');
   if (options.class) card.classList.add(options.class);
   card.innerHTML = `

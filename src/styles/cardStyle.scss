@@ -22,7 +22,6 @@ body{
     height: 100%;
     position: relative;
     transition: .2s;
-    margin: 10px;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 0 $offset gray;
@@ -53,11 +52,11 @@ body{
 }
 .menu-button{
     z-index: 4;
-    font-size: 45px;
+    font-size: 40px;
     color:gray;
     position: fixed;
-    top:30px;
-    left:10vw;
+    top:26px;
+    left: 9.8vw;
 }
 .menu-button .close-menu{
     display: none;
@@ -81,7 +80,7 @@ body.play .efk-card:not(.type) .view{
 }
 .switcher{
     position: absolute;
-    bottom: 37px;
+    bottom: 17px;
     right: 30px;
     padding:5px;
     box-sizing: content-box;
@@ -147,4 +146,35 @@ body .efk-card.type .switcher{
     &:first-child{
         margin-top:100px;
     }
+}
+body:not(.play) .playBtn,
+body.playing .playBtn{
+    display: none;
+}
+body:not(.playing) .repeat{
+    display: none;
+}
+.playBtn,
+.repeat{
+    cursor: pointer;
+    padding: 12.5px 0;
+    text-align: center;
+    margin: 15px 0;
+    top: 70px;
+    color:darkred;
+    position: absolute;
+}
+#rateLine{
+    overflow: hidden;
+    position: absolute;
+    width: 80vw;
+    top: 122px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+#rateLine *{
+    margin:0 10px;
+    font-size: 35px;
 }
