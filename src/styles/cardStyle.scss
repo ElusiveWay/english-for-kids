@@ -5,6 +5,7 @@ body.play{
 }
 body{
     background-color: #eefaeb;
+    transition: 1s;
 }
 .content-wrapper{
     width: 80vw;
@@ -15,16 +16,20 @@ body{
     justify-items: center;
 }
 .efk-card{
+    $offset: 4px;
     width: 100%;
+    z-index: 0;
     height: 100%;
     position: relative;
-    transition: .3s;
+    transition: .2s;
     margin: 10px;
     border-radius: 15px;
     overflow: hidden;
-    $offset: 4px;
     box-shadow: 0 0 $offset gray;
-    &:hover{
+    &.rot{
+        transform: rotateY(180deg);
+    }
+    &:not(.rot):hover{
         box-shadow: $offset $offset $offset*3 gray;
         transform: translate(-$offset, -$offset);
     }
@@ -32,19 +37,114 @@ body{
 .go-stat *::selection{
     background-color: transparent;
 }
+.toggle{
+    z-index: 2;
+}
 .go-stat{
-    z-index: 1;
+    z-index: 2;
     display: inline-block;
     margin:0 30px;
     border-radius: 30px;
 }
+.menu-button *{
+    box-sizing: content-box;
+    border-radius: 10px;
+    color:rgba(0, 0, 0, 0.6);
+}
 .menu-button{
-    z-index: 0;
+    z-index: 4;
     font-size: 45px;
     color:gray;
+    position: fixed;
+    top:30px;
+    left:10vw;
+}
+.menu-button .close-menu{
+    display: none;
+}
+.menu-button .open-menu{
+    display: inline;
+}
+.menu-button.active .close-menu{
+    display: inline;
+}
+.menu-button.active .open-menu{
+    display: none;
+}
+body.play .efk-card:not(.type) .view{
+    height: 100%;
+    & img{
+        height: 100%;
+        left:50%;
+        transform: translateX(-50%) scaleX(calc(390 / 260));
+    }
+}
+.switcher{
     position: absolute;
-    top:25px;
-    left:50%;
+    bottom: 37px;
+    right: 30px;
+    padding:5px;
+    box-sizing: content-box;
+    border-radius: 50%;
+    transition: .3s;
+    &:hover{
+        box-shadow: 0 0 5px #333;
+    }
+}
+body.play .efk-card:not(.type) .card-body *{
+    color: transparent;
+}
+body.play .switcher,
+body .efk-card.rot .switcher,
+body .efk-card.type .switcher{
+    display: none;
+}
+.src-text{
+    transition: .2s;
+    opacity: 1;
+}
+.trans-text{
+    position: absolute;
+    margin-top: -40px;
     transform: translateX(-50%);
-    width:80vw;
+    margin-left: 50%;
+    opacity: 0;
+    transition: .2s;
+}
+.efk-card.rot .trans-text{
+    opacity: 1;
+    transform: translateX(-50%) rotateY(-180deg);
+}
+.efk-card.rot .src-text{
+    opacity: 0;
+}
+.menu.active{
+    left:0px;
+}
+.menu{
+    z-index: 3;
+    position: fixed;
+    height: 100%;
+    width:320px;
+    top:0;
+    left:-320px;
+    background: linear-gradient(to right,#2018ab, #00d4ff);
+    opacity: .85;
+    transition: .3s;
+}
+.menu button{
+    border-radius: 15px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background: linear-gradient(to right,#b83737, #d8469b);
+    color:white;
+    width:80%;
+    margin-left:10%;
+    display: block;
+    &:hover{
+        transform: translateX(5px);
+    }
+    &:first-child{
+        margin-top:100px;
+    }
 }

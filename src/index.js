@@ -1,19 +1,52 @@
-import drawCard from './scripts/drawCard';
+import drawPage from './scripts/drawPage';
 import './styles/cardStyle.scss';
 import './styles/togglersStyle.scss';
-import cards from './data/cards';
-import hug from './data/img/hug.jpg';
-import play from './data/img/play.jpg';
-import argue from './data/img/argue.jpg';
-import big from './data/img/big.jpg';
-import dog from './data/img/dog.jpg';
-import giraffe from './data/img/giraffe.jpg';
-import shirt from './data/img/shirt.jpg';
-import angry from './data/img/angry.jpg';
 import '../node_modules/@fortawesome/fontawesome-free/css/all.css';
 import '../node_modules/@fortawesome/fontawesome-free/js/all';
 
 const doc = global.document;
+const contentClass = 'content-wrapper';
+const switchMenu = () => {
+  doc.querySelector('.menu').classList.toggle('active');
+  doc.querySelector('.menu-button').classList.toggle('active');
+};
+const hideMenu = () => {
+  doc.querySelector('.menu').classList.remove('active');
+  doc.querySelector('.menu-button').classList.remove('active');
+};
+
+// Hide menu on click outside of menu
+doc.onclick = (e) => {
+  if (e.x > 320) {
+    hideMenu();
+  }
+};
+
+// Create menu
+const menuButtons = doc.createElement('div');
+const menu = doc.createElement('div');
+menuButtons.innerHTML = `
+<div class="menu-button">
+  <i onclick="document.querySelector('.menu').classList.toggle('active');document.querySelector('.menu-button').classList.toggle('active')" style="cursor: pointer" class="close-menu fas fa-times"></i>
+  <i onclick="document.querySelector('.menu').classList.toggle('active');document.querySelector('.menu-button').classList.toggle('active')" style="cursor: pointer" class="open-menu fas fa-bars"></i>
+</div>`;
+menu.className = 'menu';
+const menuItemsTitles = ['Main menu', 'Action (set A)', 'Action (set B)', 'Action (set C)', 'Adjective', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions'];
+for (let i = 0; i < menuItemsTitles.length; i += 1) {
+  const button = doc.createElement('button');
+  button.onclick = (i === 0) ? () => {
+    drawPage(`.${contentClass}`);
+    switchMenu();
+  } : () => {
+    drawPage(`.${contentClass}`, i);
+    switchMenu();
+  };
+  button.innerText = menuItemsTitles[i];
+  button.className = 'btn';
+  menu.appendChild(button);
+}
+doc.body.appendChild(menuButtons);
+doc.body.appendChild(menu);
 
 // Create toggler
 const togglerAndStat = doc.createElement('div');
@@ -36,19 +69,9 @@ doc.body.appendChild(togglerAndStat);
 
 // Add cards wrapper
 const content = doc.createElement('div');
-content.className = 'content-wrapper';
+content.className = contentClass;
 doc.body.appendChild(content);
-
-// Generate main page cards
-const cardImagesArray = [hug, play, argue, big, dog, giraffe, shirt, angry];
-for (let i = 0; i < cards[0].length; i += 1) {
-  drawCard(`.${content.className}`, {
-    action: () => {
-      console.log('lol');
-    },
-    title: cards[0][i],
-    image: cardImagesArray[i],
-  });
-}
+// Draw main page
+drawPage(`.${content.className}`);
 
 // Generate page 1 cards
