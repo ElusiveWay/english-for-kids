@@ -1,4 +1,5 @@
 import drawPage from './scripts/drawPage';
+import drawStat from './scripts/drawStat';
 import './styles/cardStyle.scss';
 import './styles/togglersStyle.scss';
 import '../node_modules/@fortawesome/fontawesome-free/css/all.css';
@@ -18,7 +19,7 @@ const hideMenu = () => {
 
 // Hide menu on click outside of menu
 doc.onclick = (e) => {
-  if (e.x > 320) {
+  if (e.x > 210) {
     hideMenu();
   }
 };
@@ -68,10 +69,11 @@ togglerAndStat.innerHTML = `
   <label class="toggle--btn" for="toggle--knob"><span class="toggle--feature" data-label-on="Train"  data-label-off="Play"></span></label>
 </div>
 <span style="cursor:pointer;color:darkred;padding:12.5px 10px;text-align:right;margin:15px 0;width:120px" class="go-stat">
-  <span><i class="far fa-clipboard"></i> Statistic</span>
+  <span><i class="far fa-clipboard"></i> Statistics</span>
 </span>
 `;
 doc.body.appendChild(togglerAndStat);
+doc.getElementsByClassName('go-stat')[0].onclick = drawStat;
 
 // Add cards wrapper
 const content = doc.createElement('div');

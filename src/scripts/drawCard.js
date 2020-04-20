@@ -19,7 +19,7 @@ const drawCard = (querySelector = 'body', options = {}) => {
   if (options.circle) card.classList.add('type');
   if (options.class) card.classList.add(options.class);
   card.innerHTML = `
-  <div style="background:white;height:100%;cursor:pointer"class="card card-cascade wider">
+  <div style="display:block;background:white;height:100%;cursor:pointer"class="card card-cascade wider">
     <div class="view view-cascade overlay">
         <img style="width:100%;${options.circle ? 'border-bottom-left-radius:100%;' : ''}" class="card-img-top" onerror="this.src='https://via.placeholder.com/390x260?text=No+image'" src="${image}" alt="Card image cap">
         <div style="cursor:pointer;" class="mask rgba-white-slight"></div>

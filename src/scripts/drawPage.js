@@ -43,6 +43,7 @@ const drawPage = (query = 'body', page = 'Main') => {
         action: (e) => {
           if (!doc.body.classList.contains('play')) {
             e.currentTarget.getElementsByTagName('audio')[0].play();
+            global.localStorage[`${e.currentTarget.id}clicked`] = Number(global.localStorage.getItem(`${e.currentTarget.id}clicked`)) + 1;
           } else if (doc.body.classList.contains('playing')) {
             if (e.currentTarget.id === global.localStorage.target) {
               e.currentTarget.innerHTML += `
@@ -54,10 +55,12 @@ const drawPage = (query = 'body', page = 'Main') => {
               if (JSON.parse(global.localStorage.pool).length > 0) {
                 doc.getElementById('notice').src = 'audio/right.mp3';
                 doc.getElementById('notice').play();
+                global.localStorage[`${global.localStorage.target}win`] = Number(global.localStorage.getItem(`${global.localStorage.target}win`)) + 1;
                 doc.getElementById('rateLine').innerHTML = `<i style="color:green" class="rate fas fa-thumbs-up"></i> ${doc.getElementById('rateLine').innerHTML}`;
                 global.localStorage.setItem('target', JSON.parse(global.localStorage.getItem('pool'))[Math.floor(Math.random() * JSON.parse(global.localStorage.getItem('pool')).length)]);
                 global.setTimeout(() => doc.getElementById(global.localStorage.target).getElementsByTagName('audio')[0].play(), 1500);
               } else {
+                global.localStorage[`${global.localStorage.target}win`] = Number(global.localStorage.getItem(`${global.localStorage.target}win`)) + 1;
                 global.localStorage.setItem('target', '');
                 doc.querySelector(query).innerHTML = `
                 <div style="top:0;left:0;width:100%;height:100%;position:fixed;background:white;z-index:10000;flex-direction:column;display:flex;justify-content:center;align-items:center;">
@@ -76,6 +79,7 @@ const drawPage = (query = 'body', page = 'Main') => {
               }
             } else {
               doc.getElementById('notice').src = 'audio/mistake.mp3';
+              global.localStorage[`${global.localStorage.target}lose`] = Number(global.localStorage.getItem(`${global.localStorage.target}lose`)) + 1;
               doc.getElementById('notice').play();
               doc.getElementById('rateLine').innerHTML = `<i style="color:darkred" class="rate fas fa-thumbs-down"></i> ${doc.getElementById('rateLine').innerHTML}`;
               global.localStorage.mistakes = Number(global.localStorage.mistakes) + 1;
