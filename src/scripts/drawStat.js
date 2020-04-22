@@ -2,6 +2,49 @@ import cards from '../data/cards';
 import drawPage from './drawPage';
 
 const doc = global.document;
+const sortTable = (targ = 0) => {
+  const table = doc.getElementsByClassName('table')[0];
+  let rows;
+  let switching;
+  let i;
+  let x;
+  let y;
+  let shouldSwitch;
+  switching = true;
+  if (!global.table) global.table = {};
+  if (global.table[`tableColl${targ}`] === true) {
+    global.table[`tableColl${targ}`] = false;
+  } else {
+    global.table[`tableColl${targ}`] = true;
+  }
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 1; i < (rows.length - 1); i += 1) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName('td')[targ];
+      y = rows[i + 1].getElementsByTagName('td')[targ];
+      let condition;
+      if (global.table[`tableColl${targ}`] === true) {
+        condition = (targ < 3)
+          ? (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase())
+          : (Number(x.innerHTML) < Number(y.innerHTML));
+      } else {
+        condition = (targ < 3)
+          ? (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase())
+          : (Number(x.innerHTML) > Number(y.innerHTML));
+      }
+      if (condition) {
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+};
 
 const drawStat = () => {
   const modalMask = doc.createElement('div');
@@ -57,7 +100,7 @@ const drawStat = () => {
       return newT;
     }, []);
     if (sortedMistakes.length === 0) {
-      const message = 'Sorry! But... You never made a mistake!';
+      const message = 'There are no difficult words for you!';
       const extraModal = doc.createElement('div');
       extraModal.style.width = '100%';
       extraModal.style.height = '100%';
@@ -91,16 +134,18 @@ const drawStat = () => {
   wordsArray = wordsArray.filter((v) => v[0].word !== undefined).reduce((t, c) => t.concat(c), []);
   const tableWrapper = doc.createElement('div');
   const table = doc.createElement('table');
+  table.style.backgroundColor = '#e8e8ff';
   const tbody = doc.createElement('tbody');
   const thead = doc.createElement('thead');
   const trHead = doc.createElement('tr');
   for (let i = 0; i < theadKeys.length; i += 1) {
     const th = doc.createElement('th');
     th.style.cursor = 'pointer';
+    th.onclick = () => sortTable(i);
     th.style.whiteSpace = 'pre';
     th.style.minWidth = `${(100 / 12) * 0.8}vw`;
     th.style.width = '1px';
-    th.innerText = theadKeys[i];
+    th.innerHTML = `${theadKeys[i]} <i style="font-size:.8em;" class="fas fa-sort"></i>`;
     trHead.appendChild(th);
   }
   for (let i = 0; i < wordsArray.length; i += 1) {
