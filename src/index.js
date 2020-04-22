@@ -26,6 +26,7 @@ doc.onclick = (e) => {
 
 // Create audio
 const audio = doc.createElement('audio');
+audio.preload = 'auto';
 audio.id = 'notice';
 doc.body.appendChild(audio);
 

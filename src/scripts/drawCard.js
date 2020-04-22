@@ -29,7 +29,7 @@ const drawCard = (querySelector = 'body', options = {}) => {
         <h4 style="text-align:center;" class="trans-text card-title"><strong>${trans}</strong></h4>
         <i onclick="event.stopPropagation();let obj = this.parentNode.parentNode.parentNode; obj.classList.add('rot'); obj.onmouseleave = (e) => e.currentTarget.classList.remove('rot')" class="switcher fas fa-sync-alt"></i>
     </div>
-    ${options.audio ? `<audio src="${options.audio}"></audio>` : ''}
+    ${options.audio ? `<audio preload="auto" src="${options.audio}"></audio>` : ''}
   </div>`;
   for (let i = 0; i < Object.keys(style).length; i += 1) {
     card.style[Object.keys(style)[i]] = style[Object.keys(style)[i]];
